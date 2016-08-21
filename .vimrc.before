@@ -1,0 +1,8 @@
+let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#default#section_truncate_width = {}
+
+let g:airline_section_x      = ''
+let g:airline_section_y      = '' 
+
+:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
