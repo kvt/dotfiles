@@ -7,27 +7,46 @@
     "typescriptreact",
     "json",
     "javascriptreact",
+    "javascript.jsx",
+    "jsx",
     "typescript.tsx",
-    "svelte",
-    "rust"
+    "scss",
+    "sass",
+    "css"
   ],
   "eslint.filetypes": [
     "javascript",
     "typescript",
     "typescriptreact",
     "javascriptreact",
-    "typescript.tsx",
-    "svelte"
+    "typescript.tsx"
   ],
-  "prettier.eslintIntegration": true,
   "eslint.autoFixOnSave": true,
+  "prettier.eslintIntegration": true,
+  "prettier.tslintIntegration": true,
+  "prettier.stylelintIntegration": true,
+  "javascript.validate.enable": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "rust-client.rustupPath": "/home/ketan/.cargo/bin/rustup",
-  "rust-client.updateOnStartup": true,
   "explorer.previewAction.onHover": false,
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.enableVimDevicons": true,
-  "explorer.width": 30
+  "explorer.width": 30,
+  "snippets.extends": {
+    "cpp": ["c"],
+    "typescriptreact": ["javascript"],
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  },
+  "languageserver": {
+    "flow": {
+      "command": "${workspaceFolder}/node_modules/.bin/flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    }
+  }
 }

@@ -25,13 +25,14 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " auto-close plugin
 Plug 'rstacruz/vim-closer'
+Plug 'jiangmiao/auto-pairs'
 
 " Intellisense Engine
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Snippet support
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 
 " Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -47,22 +48,25 @@ Plug 'tpope/vim-fugitive'
 " Typescript syntax highlighting
 Plug 'HerringtonDarkholme/yats.vim'
 
+" Plug 'sheerun/vim-polyglot'
+
 " ReactJS JSX syntax highlighting
 Plug 'mxw/vim-jsx'
 
 " === Syntax Highlighting === "
 
 " Syntax highlighting for nginx
-Plug 'chr4/nginx.vim'
+" Plug 'chr4/nginx.vim'
 
 " Syntax highlighting for javascript libraries
 Plug 'othree/javascript-libraries-syntax.vim'
 
 " Improved syntax highlighting and indentation
 Plug 'othree/yajs.vim'
+Plug 'pangloss/vim-javascript'
 
 " Generate JSDoc commands based on function signature
-Plug 'heavenshell/vim-jsdoc'
+" Plug 'heavenshell/vim-jsdoc'
 
 " Customized vim status line
 Plug 'vim-airline/vim-airline'
@@ -90,7 +94,6 @@ Plug 'kana/vim-textobj-user' | Plug 'whatyouhide/vim-textobj-xmlattr'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
 
 " Plug 'vimwiki/vimwiki'
@@ -98,18 +101,15 @@ Plug 'justinmk/vim-sneak'
 
 "" Snippets
 " Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'kewah/vim-stylefmt'
 
 call plug#end()
 
-
-" }}}
-" Colors {{{
-syntax enable           " enable syntax processing
-let base16colorspace=256
-colorscheme base16-dracula
-" set guifont=Fira\ Code:h18
-set termguicolors
 " }}}
 " Misc {{{
 set backspace=indent,eol,start
@@ -119,6 +119,10 @@ set hidden
 set autoread
 set updatetime=300
 set nocompatible
+
+execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+
 " }}}
 " Spaces & Tabs {{{
 set tabstop=4           " 4 space tab
@@ -132,7 +136,7 @@ set autoindent
 set nowrap
 " }}}
 " UI Layout {{{
-set number              " show line numbers
+set number relativenumber              " show line numbers
 set showcmd             " show command in bottom bar
 set nocursorline        " highlight current line
 set wildmenu
@@ -144,6 +148,7 @@ set cmdheight=1
 set shortmess+=c
 set noshowmode
 set diffopt+=vertical
+set scrolloff=10
 " }}}
 " Searching {{{
 set ignorecase          " ignore case when searching
@@ -154,7 +159,7 @@ set hlsearch            " highlight all matches
 " Folding {{{
 "=== folding ===
 set foldmethod=indent   " fold based on indent level
-set foldnestmax=10      " max 10 depth
+set foldnestmax=10       " max 10 depth
 set foldenable          " don't fold files by default on open
 set foldlevelstart=10   " start with fold level of 1
 " }}}
@@ -174,8 +179,8 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -185,12 +190,13 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nnoremap 'rn <Plug>(coc-rename)
+nnoremap 'rpw :CocSearch <C-R>=expand('<cword>')<CR><CR>
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nnoremap 'ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nnoremap 'qf  <Plug>(coc-fix-current)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -207,7 +213,7 @@ omap ac <Plug>(coc-classobj-a)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list.
 nnoremap <silent> <space>c  :<C-u>CocList<CR>
 nnoremap <silent> <space>n  :<C-u>CocCommand explorer<CR>
@@ -215,6 +221,8 @@ nnoremap <silent> <space>n  :<C-u>CocCommand explorer<CR>
 " }}}
 " FZF {{{
 let $FZF_DEFAULT_COMMAND = 'rg --hidden --files --glob !.git'
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all,ctrl-d:deselect-all'
+let g:fzf_layout = { 'down': '~80%' }
 " }}}
 " NeoSnippets {{{
 " Load custom snippets from snippets folder
@@ -229,6 +237,7 @@ augroup configgroup
     autocmd!
     autocmd! ColorScheme * call s:custom_colors()
     autocmd! FileType vim,c++,txt setlocal foldmethod=marker
+    autocmd! BufWritePost *.css,*.scss,*.sass silent !stylefmt %
 augroup END
 " }}}
 " Testing {{{
@@ -254,6 +263,7 @@ set noswapfile
 " Wrap in try/catch to avoid errors on initial install before plugin is available
 try
 
+let g:airline_theme = 'onedark'
 " === Vim airline ==== "
 " Enable extensions
 let g:airline_extensions = ['hunks', 'coc']
@@ -314,7 +324,7 @@ endfunction
 
 function! s:custom_colors()
   " coc.nvim color changes
-  hi link CocErrorSign WarningMsg
+  hi link CocErrorSign ErrorMsg
   hi link CocWarningSign Number
   hi link CocInfoSign Type
 
@@ -323,10 +333,15 @@ function! s:custom_colors()
   hi NonText ctermbg=NONE guibg=NONE
   hi LineNr ctermfg=NONE guibg=NONE
   hi SignColumn ctermfg=NONE guibg=NONE
+  " hi StatusLine guifg=#16252b guibg=#6699CC
+  " hi StatusLineNC guifg=#16252b guibg=#16252b
 
   " Try to hide vertical spit and end of buffer symbol
-  hi VertSplit gui=NONE
-  hi EndOfBuffer ctermbg=NONE ctermfg=NONE
+  hi VertSplit gui=NONE guifg=#4b5263 guibg=#4b5263
+  " hi EndOfBuffer ctermbg=NONE ctermfg=NONE guibg=#17252c guifg=#17252c
+
+  " Customize NERDTree directory
+  hi NERDTreeCWD guifg=#99c794
 
   " Make background color transparent for git changes
   hi SignifySignAdd guibg=NONE
@@ -373,6 +388,7 @@ nnoremap <leader>o :Buffers<CR>
 nnoremap <leader>e :Files<CR>
 
 nnoremap <leader>f :Rg <C-r><C-w><CR>
+nnoremap <leader>sp :CocSearch <C-r><C-w><CR>
 
 map <leader>r :%s///<left><left>
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -418,9 +434,19 @@ vmap v <Plug>(expand_region_expand)
 vmap V <Plug>(expand_region_shrink)
 
 " Map <C-k> as shortcut to activate snippet if available
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_target)
+
+" Use <C-l> for trigger snippet expand.
+imap fj <Plug>(coc-snippets-expand)
+" imap jf <Plug>(coc-snippets-expand)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<tab>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
 
 map gS <Plug>Sneak_,
 map gs <Plug>Sneak_;
@@ -440,8 +466,13 @@ map <Tab> %
 "   %bd|e#
 "   leader is <Space> and local leader is (')
     nnoremap 'k :bufdo bd<CR> 
-    nnoremap '' <C-^>
+    nnoremap <Enter> <C-^>
     nnoremap 'f :Rg<Space>
+    nnoremap <leader>g :CocSearch<Space>
+    nnoremap 'gds :Gdiffsplit!<CR>
+    nnoremap 'h :diffget //2<CR>
+    nnoremap 'l :diffget //3<CR>
+
 " }}}
 " Signify {{{
 let g:signify_sign_delete = '-'
@@ -453,6 +484,14 @@ if exists('g:loaded_webdevicons')
 endif
 
 
+" }}}
+" Colors {{{
+syntax enable           " enable syntax processing
+" let base16colorspace=256
+set background=dark
+set termguicolors
+colorscheme onedark
+" set guifont=Fira\ Code:h18
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
