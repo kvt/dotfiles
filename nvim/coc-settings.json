@@ -12,41 +12,32 @@
     "typescript.tsx",
     "scss",
     "sass",
-    "css"
+    "css",
+    "ts",
+    "svelte",
+    "rust"
   ],
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact",
-    "typescript.tsx"
-  ],
-  "eslint.autoFixOnSave": true,
-  "prettier.eslintIntegration": true,
-  "prettier.tslintIntegration": true,
-  "prettier.stylelintIntegration": true,
   "javascript.validate.enable": false,
+
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "explorer.previewAction.onHover": false,
-  "explorer.icon.enableNerdfont": true,
-  "explorer.icon.enableVimDevicons": true,
+  "diagnostic.hintSign": "•",
+
   "explorer.width": 30,
-  "snippets.extends": {
-    "cpp": ["c"],
-    "typescriptreact": ["javascript"],
-    "javascriptreact": ["javascript"],
-    "typescript": ["javascript"]
-  },
-  "languageserver": {
-    "flow": {
-      "command": "${workspaceFolder}/node_modules/.bin/flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"]
-    }
-  }
+  "explorer.buffer.root.template": "[icon & 1] OPEN EDITORS",
+  "explorer.file.root.template": "[icon & 1] PROJECT ([root])",
+  "explorer.file.child.template": "[git | 2] [selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][modified][readonly] [linkIcon & 1][link growRight 1 omitCenter 5]",
+  "explorer.file.showHiddenFiles": true,
+  "explorer.file.autoReveal": false,
+  "explorer.icon.enableVimDevicons": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.previewAction.onHover": false,
+
+  "svelte.plugin.typescript.enable": true,
+  "javascript.suggestionActions.enabled": true,
+  "typescript.suggestionActions.enabled": true,
+
+  "rust-analyzer.lens.enable": true,
+  "rust-analyzer.inlayHints.enable": true
 }
